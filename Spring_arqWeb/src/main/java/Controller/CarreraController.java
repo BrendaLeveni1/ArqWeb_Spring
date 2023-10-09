@@ -40,7 +40,7 @@ public class CarreraController {
     }
 
 
-    // ver este no anda
+ 
     @GetMapping("/reporte")
     public List<EstudianteCarreraDTO> reportar(){
 
