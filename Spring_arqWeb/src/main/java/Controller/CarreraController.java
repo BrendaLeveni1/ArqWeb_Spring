@@ -32,6 +32,12 @@ public class CarreraController {
     public List<CarreraYCantidadDTO> listarCarrerasConInscriptos() {
         return repositorio.listaCarrerasConInscriptos();
     }
+<<<<<<< HEAD
+=======
+
+
+ 
+>>>>>>> f5431eeae9617aba82da3565296f3cfc3e9f30cc
     @GetMapping("/reporte")
     public List<EstudianteCarreraDTO> reportar(){
 
