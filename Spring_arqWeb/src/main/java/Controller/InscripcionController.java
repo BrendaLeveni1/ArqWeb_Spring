@@ -23,7 +23,7 @@ import Modelo.Estudiante;
 public class InscripcionController {
 
     @Autowired
-    private RepositoryInscripcion repo;
+    private RepositoryInscripcion repositorio;
 
     @Autowired
     private RepositoryEstudiante repoEstudiante;
@@ -33,7 +33,7 @@ public class InscripcionController {
 
     @GetMapping
     public List<Inscripcion> listarInscriptos() {
-        return repo.findAll();
+        return repositorio.findAll();
     }
 
     @PostMapping
@@ -41,7 +41,13 @@ public class InscripcionController {
         Optional<Estudiante> e = repoEstudiante.findById((long) json.get("nroDni"));
         Optional<Carrera> c = repoCarrera.findById((long) json.get("id"));
         Inscripcion i = new Inscripcion((int) json.get("id_inscripcion"),e.get(), c.get(), (int) json.get("anioIngreso") );
-        return repo.save(i);
+        return repositorio.save(i);
     }
+
+    @DeleteMapping("/{id_inscripcion}")
+	public void eliminarInscripcion(@PathVariable Long id_inscripcion) {
+		RepositoryInscripcion.deleteById(id_inscripcion);
+	}
+
    
 }

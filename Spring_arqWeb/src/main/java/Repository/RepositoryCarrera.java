@@ -20,10 +20,10 @@ public interface RepositoryCarrera extends JpaRepository<Carrera, Long> {
 	List<CarreraYCantidadDTO> listaCarrerasConInscriptos();
 	
 	
-	@Query("SELECT NEW Dto.EstudianteCarreraDTO(c , e, i, i.fecha as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c")
+	@Query("SELECT NEW Dto.EstudianteCarreraDTO(c , e, i, i.fecha as fecha) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c")
 	public List<EstudianteCarreraDTO> listaDeIngresos();
 
-	@Query("SELECT NEW Dto.EstudianteCarreraDTO(c , e, i, (i.fecha + i. antiguedad) as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c WHERE i.esEgresado = 1")
+	@Query("SELECT NEW Dto.EstudianteCarreraDTO(c , e, i, (i.fecha + i. antiguedad) as fecha) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c WHERE i.esEgresado = 1")
 	public List<EstudianteCarreraDTO> listaDeEgresos();
 
 }

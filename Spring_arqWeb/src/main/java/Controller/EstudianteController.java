@@ -21,37 +21,42 @@ import Repository.RepositoryEstudiante;
 public class EstudianteController {
 
     @Autowired
-    private RepositoryEstudiante repo;
+    private RepositoryEstudiante repositorio;
 
     @Autowired
-    private RepositoryCarrera carreraRepo;
+    private RepositoryCarrera repoCarrera;
 
     @GetMapping
     public List<Estudiante> listarEstudiantes() {
-        return repo.findAll();
+        return repositorio.findAll();
     }
 
     @GetMapping("/{id}")
     public Optional<Estudiante> estudianteXlibreta(@PathVariable Long id) {
-        return repo.findById(id);
+        return repositorio.findById(id);
     }
     @GetMapping("/g/{genero}")
     public List<Estudiante> Genero(@PathVariable String genero){
-        return repo.Genero(genero);
+        return repositorio.Genero(genero);
+    }
+    
+    @GetMapping("/{nombre}/{ciudad}")
+    public List<Estudiante> filtrar (@PathVariable String nombre, @PathVariable String ciudad){
+        System.out.println("busca"+nombre+" "+ciudad);
+         Carrera c=repoCarrera.Nombre(nombre);
+         System.out.println("carera encontrada "+ c.getNombre());
+          return repositorio.filtrar(c, ciudad);
     }
 
     @PostMapping
     public void grabarEstudiante(@RequestBody Estudiante e) {
-        repo.save(e);
+        repositorio.save(e);
     }
+    @DeleteMapping("/{nroDni}")
+	public void eliminarEstudiante(@PathVariable Long nroDni) {
+	        RepositoryEstudiante.deleteById(nroDni);
+	}
 
-    @GetMapping("/{nombre}/{ciudad}")
-    public List<Estudiante> filtrar (@PathVariable String nombre, @PathVariable String ciudad){
-        System.out.println("busca"+nombre+" "+ciudad);
-        Carrera c=carreraRepo.Nombre(nombre);
-        System.out.println("carera encontrada "+ c.getNombre());
-        return repo.filtrar(c, ciudad);
-    }
 
 
 }

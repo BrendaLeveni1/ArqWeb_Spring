@@ -19,41 +19,41 @@ import Repository.RepositoryCarrera;
 @RequestMapping("/carrera")
 public class CarreraController {
     @Autowired
-    private RepositoryCarrera repo;
-
-    // @Autowired
-    // private EstudianteRepo estudianteRepo;
+    private EstudianteRepo estudianteRepo;
+    @Autowired
+    private RepositoryCarrera repositorio;
 
     @GetMapping
     public List<Carrera> listarCarreras(){
-        return repo.findAll();
+        return repositorio.findAll();
     }
-
-    @PostMapping
-    public void grabarCarrera(@RequestBody Carrera c){
-        repo.save(c);
-    }
-
+    
     @GetMapping("/anotados")
     public List<CarreraYCantidadDTO> listarCarrerasConInscriptos() {
-        return repo.listaCarrerasConInscriptos();
+        return repositorio.listaCarrerasConInscriptos();
     }
-
-
-    // ver este no anda
     @GetMapping("/reporte")
     public List<EstudianteCarreraDTO> reportar(){
 
-        List<EstudianteCarreraDTO> listaCarreras=repo.listaDeIngresos();
-        listaCarreras.addAll(repo.listaDeEgresos());
+        List<EstudianteCarreraDTO> listaCarreras=repositorio.listaDeIngresos();
+        listaCarreras.addAll(repositorio.listaDeEgresos());
         listaCarreras.sort(Comparator
-		.comparing(EstudianteCarreraDTO::getNombreCarrera) 
-		.thenComparing(EstudianteCarreraDTO::getFech)
-		);
-
+        .comparing(EstudianteCarreraDTO::getNombreCarrera) 
+        .thenComparing(EstudianteCarreraDTO::getFecha)
+        );
 
         return listaCarreras;
     }
+    @PostMapping
+    public void grabarCarrera(@RequestBody Carrera c){
+        repositorio.save(c);
+    }
+
+    @DeleteMapping("/{id}")
+	public void eliminarCarrera(@PathVariable Long id) {
+		RepositoryCarrera.deleteById(id);
+	}
+
 
 
 
